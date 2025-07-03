@@ -3,6 +3,6 @@ export function getVersion() {
 }
 
 export function getHostName() {
-    let name;
-    return '';
+    return 'unknown';
 }
+
