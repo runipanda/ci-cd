@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Blog List</title>
+</head>
+
+<body>
+    <h1>Blog Posts</h1>
+    <ul>
+        <% blogs.forEach(blog=> { %>
+            <li>
+                <h2>
+                    <%= blog.title %>
+                </h2>
+                <p>
+                    <%= blog.description %>
+                </p>
+            </li>
+            <% }) %>
+    </ul>
+
+    <div>
+        <h4>Version: <%= version %> serverd by: <%= host %>
+        </h4>
+    </div>
+</body>
+
+</html>
