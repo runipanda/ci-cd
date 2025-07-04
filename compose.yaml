@@ -31,7 +31,7 @@ services:
   blog-server:
     image: runipanda/blog-app:build-deb7986998fa901ab78d86a00850ec97cb83eaa2
     deploy:
-      replicas: 1
+      replicas: 10
       update_config:
         order: start-first
         failure_action: rollback
