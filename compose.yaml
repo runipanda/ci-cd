@@ -1,6 +1,6 @@
 services:
   blog-db:
-    image: "mysql:latest"
+    image: mysql:latest
     deploy:
       replicas: 1
       update_config:
@@ -25,12 +25,11 @@ services:
     volumes:
       - blog-db-vol:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - '3306:3306'
     networks:
       - blog-app-net
-
   blog-server:
-    image: "runipanda/blog-deployment-app:v13"
+    image: runipanda/blog-app:build-d4d6e2ba0ba1fa34f5d4f6db95b1ed47dc1a2bf1
     deploy:
       replicas: 1
       update_config:
@@ -42,19 +41,17 @@ services:
         order: start-first
     healthcheck:
       test:
-        [
-          "CMD",
-          "wget",
-          "--no-verbose",
-          "--tries=1",
-          "--spider",
-          "http://localhost:3000/health"
-        ]
+        - CMD
+        - wget
+        - '--no-verbose'
+        - '--tries=1'
+        - '--spider'
+        - http://localhost:3000/health
       interval: 20s
       timeout: 5s
       retries: 5
     ports:
-      - "3001:3000"
+      - '3001:3000'
     environment:
       - DB_HOST=blog-db
       - DB_USER=root
@@ -65,10 +62,7 @@ services:
       - blog-db
     networks:
       - blog-app-net
-
 volumes:
-  blog-db-vol:
-
+  blog-db-vol: null
 networks:
-  blog-app-net:
-
+  blog-app-net: null
