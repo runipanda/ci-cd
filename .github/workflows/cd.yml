@@ -8,8 +8,8 @@ jobs:
         permissions:
             contents: write
         env:
-            IMAGE_NAME: codersgyan/blog-app
-            IMAGE_TAG: build-${{github.sha}} #codersgyan/blog-app:build-1
+            IMAGE_NAME: runipanda/blog-app
+            IMAGE_TAG: build-${{github.sha}} #runipanda/blog-app:build-1
         steps:
             - name: Checkout the source code
               uses: actions/checkout@v4
@@ -54,7 +54,7 @@ jobs:
         name: Deploy the image to Docker Swarm Cluster
         runs-on: ubuntu-latest
         env:
-            IMAGE_NAME: codersgyan/blog-app
+            IMAGE_NAME: runipanda/blog-app
             IMAGE_TAG: build-${{github.sha}}
         needs:
             - build-and-push
