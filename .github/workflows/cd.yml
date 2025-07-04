@@ -2,15 +2,43 @@ name: Bloggy CD
 on:
     push:
         branches: ['main']
-jobs: 
+jobs:
     build-and-push:
         runs-on: ubuntu-latest
+        permissions:
+            contents: write
         env:
             IMAGE_NAME: runipanda/blog-app
-            IMAGE_TAG: build-${{github.run_number}} #runipanda/blog-app:build-12
+            IMAGE_TAG: build-${{github.sha}} #runipanda/blog-app:build-1
         steps:
             - name: Checkout the source code
               uses: actions/checkout@v4
+              with:
+                  persist-credentials: false
+            - name: Update compose yaml
+              uses: fjogeleit/yaml-update-action@v0.16.0
+              with:
+                  valueFile: compose.yaml
+                  propertyPath: 'services["blog-server"].image'
+                  value: ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
+                  commitChange: false
+            - name: Generate token
+              id: generate_token
+              uses: tibdex/github-app-token@v2
+              with:
+                  app_id: ${{secrets.APP_ID}}
+                  private_key: ${{secrets.APP_SECRET_KEY}}
+            - name: Commit files
+              run: |
+                  git config --local user.name github-actions
+                  git config --local user.email github-action@github.com
+                  git add .
+                  git commit -m "bump the image version ${{env.IMAGE_TAG}} [skip ci]"
+            - name: Push changes
+              uses: ad-m/github-push-action@master
+              with:
+                  github_token: ${{ steps.generate_token.outputs.token }}
+
             - name: Build docker image
               run: docker build -t ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}} --platform linux/amd64 .
             - name: Login into Docker Hub
@@ -20,3 +48,30 @@ jobs:
                   password: ${{secrets.DOCKERHUB_PASSWORD}}
             - name: Push docker image to Docker Hub
               run: docker push ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
+
+    deploy:
+        name: Deploy the image to Docker Swarm Cluster
+        runs-on: ubuntu-latest
+        env:
+            IMAGE_NAME: runipanda/blog-app
+            IMAGE_TAG: build-${{github.sha}}
+        needs:
+            - build-and-push
+        steps:
+            - name: SSH into the server
+              uses: appleboy/ssh-action@v1
+              with:
+                  host: ${{secrets.SWARM_MAMAGER_HOST}}
+                  username: ${{secrets.SWARM_MANAGER_USERNAME}}
+                  key: ${{secrets.SWARM_MANAGER_SSH_KEY}}
+                  port: ${{secrets.SWARM_MANAGER_PORT}}
+                  script: |
+                      set -e
+                      cd ~/bloggy
+
+                      # pull compose file using git
+                      git fetch origin main
+                      git checkout origin/main
+
+                      docker pull ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
+                      docker stack deploy -c compose.yaml bloggy

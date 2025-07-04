@@ -1,8 +1,0 @@
-
-{
-    email me@codersgyan.com
-}
-
-devops-bloggy.xyz {
-    reverse_proxy blog-server:3000
-}
