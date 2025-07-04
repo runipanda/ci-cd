@@ -1,4 +1,4 @@
-name: Bloggy app
+name: Bloggy CI
 
 on:
     push:

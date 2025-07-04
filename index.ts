@@ -9,6 +9,7 @@ dotenv.config()
 const app = express()
 app.set('view engine', 'ejs')
 
+  // reading through a file
 let dbUser = process.env.DB_USER
 let dbPassword = process.env.DB_PASSWORD
 
