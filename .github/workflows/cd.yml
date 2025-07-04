@@ -37,7 +37,7 @@ jobs:
                   git config --local user.name github-actions
                   git config --local user.email github-action@github.com
                   git add .
-                  git commit -m "🐳 bump: shipping out a new image ${{env.IMAGE_TAG}}"
+                  git commit -m "✨ 💫 refined: upgraded image version to ${{env.IMAGE_TAG}} for latest build"
             - name: Push commit
               run: |
                  git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
