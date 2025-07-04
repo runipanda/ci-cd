@@ -38,7 +38,10 @@ jobs:
                   git config --local user.email github-action@github.com
                   git add .
                   git commit -m "bump the image version ${{env.IMAGE_TAG}}"
-                  git push
+            - name: Push commit
+              run: |
+                 git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+                 git push origin main
 
     deploy:
         name: Deploy the image to Docker Swarm Cluster
