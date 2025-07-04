@@ -37,7 +37,7 @@ jobs:
                   git config --local user.name github-actions
                   git config --local user.email github-action@github.com
                   git add .
-                  git commit -m "bump the image version ${{env.IMAGE_TAG}}"
+                  git commit -m "✨😍 successful deployment updated the image tag ${{env.IMAGE_TAG}}"
             - name: Push commit
               run: |
                  git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
