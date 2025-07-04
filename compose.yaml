@@ -29,7 +29,7 @@ services:
     networks:
       - blog-app-net
   blog-server:
-    image: runipanda/blog-app:build-f77661fd94beb5b4116ee69b80ebef03865a49cb
+    image: runipanda/blog-app:build-47b2b5390dd1118f4d773e163f7b17b6767d0fcc
     deploy:
       replicas: 1
       update_config:
@@ -65,12 +65,10 @@ services:
     secrets:
       - db_password
       - db_username
-	
 volumes:
   blog-db-vol: null
 networks:
   blog-app-net: null
- 
 secrets:
   db_password:
     external: true
