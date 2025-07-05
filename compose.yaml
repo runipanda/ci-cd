@@ -32,7 +32,7 @@ services:
     networks:
       - blog-app-net
   blog-server:
-    image: runipanda/blog-app:build-ed7a587e9f6b44ed8295aa678d588f5bc77eda5d
+    image: runipanda/blog-app:build-35b0ac9f3da54363c6ff37509989914d99c1f929
     deploy:
       replicas: 1
       update_config:
