@@ -31,6 +31,8 @@ services:
       - '3306:3306'
     networks:
       - blog-app-net
+    secrets:
+      - db_password
   blog-server:
     image: runipanda/blog-app:build-e43d7d785f93e4ece9dbfd121a105448c16cef2f
     deploy:
