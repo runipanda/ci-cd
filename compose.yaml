@@ -102,8 +102,6 @@ services:
      - GZIP_LEVEL=9
      - EXIT_BACKUP=1
     volumes:
-     - mysql_backup:/backups
-    volumes:
      - mysql_backup:/backup
     deploy:
       replicas: 1
