@@ -65,8 +65,32 @@ services:
     secrets:
       - db_password
       - db_username
+  caddy:
+    image: caddy:latest
+    deploy:
+      replicas: 1
+      update_config:
+        order: start-first
+        failure_action: rollback
+        delay: 10s
+      rollback_config:
+        parallelism: 1
+        order: start-first
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - blog-app-net
+    configs:
+      - source: caddyfile
+        target: /etc/caddy/Caddyfile
 volumes:
   blog-db-vol: null
+  caddy_data: null
+  caddy_config: null
 networks:
   blog-app-net: null
 secrets:
@@ -74,3 +98,6 @@ secrets:
     external: true
   db_username:
     external: true
+configs:
+  Caddyfile:
+    file: ./Caddyfile
