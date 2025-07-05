@@ -32,7 +32,7 @@ services:
     networks:
       - blog-app-net
   blog-server:
-    image: runipanda/blog-app:build-35b0ac9f3da54363c6ff37509989914d99c1f929
+    image: runipanda/blog-app:build-3e9240820734a61ed29da0c520836acd90762b07
     deploy:
       replicas: 1
       update_config:
@@ -93,16 +93,16 @@ services:
   db-backup:
     image: fradelg/mysql-cron-backup:latest
     environment:
-     - MYSQL_HOST=blog-db
-     - MYSQL_USER_FILE=/run/secrets/db_username
-     - MYSQL_PASSWORD_FILE=/run/secrets/db_password
-     - MAX_BACKUPS=5
-     - INIT_BACKUP=1
-     - CRON_TIME=* * * * *
-     - GZIP_LEVEL=9
-     - EXIT_BACKUP=1
+      - MYSQL_HOST=blog-db
+      - MYSQL_USER_FILE=/run/secrets/db_username
+      - MYSQL_PASSWORD_FILE=/run/secrets/db_password
+      - MAX_BACKUPS=5
+      - INIT_BACKUP=1
+      - CRON_TIME=* * * * *
+      - GZIP_LEVEL=9
+      - EXIT_BACKUP=1
     volumes:
-     - mysql_backup:/backup
+      - mysql_backup:/backup
     deploy:
       replicas: 1
       placement:
@@ -120,9 +120,6 @@ services:
     secrets:
       - db_username
       - db_password
-
-
-	  
 volumes:
   blog-db-vol: null
   caddy_data: null
