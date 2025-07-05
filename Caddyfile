@@ -1,0 +1,7 @@
+{
+    email runipanda@gmail.com
+}
+
+runi.publicvm.com {
+    reverse_proxy blog-server:3000
+}
