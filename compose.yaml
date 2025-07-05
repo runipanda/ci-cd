@@ -95,7 +95,7 @@ services:
     environment:
       - MYSQL_HOST=blog-db
       - MYSQL_USER_FILE=/run/secrets/db_username
-      - MYSQL_PASSWORD_FILE=/run/secrets/db_password
+      - MYSQL_PASS_FILE=/run/secrets/db_password
       - MAX_BACKUPS=5
       - INIT_BACKUP=1
       - CRON_TIME=* * * * *
