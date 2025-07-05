@@ -90,6 +90,41 @@ services:
     configs:
       - source: Caddyfile
         target: /etc/caddy/Caddyfile
+  db-backup:
+    image: fradelg/mysql-cron-backup:latest
+    environment:
+     - MYSQL_HOST=blog-db
+     - MYSQL_USER_FILE=/run/secrets/db_username
+     - MYSQL_PASSWORD_FILE=/run/secrets/db_password
+     - MAX_BACKUPS=5
+     - INIT_BACKUP=1
+     - CRON_TIME=* * * * *
+     - GZIP_LEVEL=9
+     - EXIT_BACKUP=1
+    volumes:
+     - mysql_backup:/backups
+    volumes:
+     - mysql_backup:/backup
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.dblabelnode == true
+      update_config:
+        order: start-first
+        failure_action: rollback
+        delay: 10s
+      rollback_config:
+        parallelism: 1
+        order: start-first
+    networks:
+      - blog-app-net
+    secrets:
+      - db_username
+      - db_password
+
+
+	  
 volumes:
   blog-db-vol: null
   caddy_data: null
