@@ -85,7 +85,7 @@ services:
     networks:
       - blog-app-net
     configs:
-      - source: caddyfile
+      - source: Caddyfile
         target: /etc/caddy/Caddyfile
 volumes:
   blog-db-vol: null
