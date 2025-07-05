@@ -119,14 +119,12 @@ services:
       - blog-app-net
     secrets:
       - db_username
-      - db_password
-
-
-	  
+      - db_password  
 volumes:
   blog-db-vol: null
   caddy_data: null
   caddy_config: null
+  mysql_backup: null
 networks:
   blog-app-net: null
 secrets:
