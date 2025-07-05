@@ -3,6 +3,9 @@ services:
     image: mysql:latest
     deploy:
       replicas: 1
+      placement:
+        constraints:
+          - node.labels.dblabelnode == true
       update_config:
         order: start-first
         failure_action: rollback
