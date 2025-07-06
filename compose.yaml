@@ -5,7 +5,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.labels.dblabelnode == true
+          - node.labels.dbnode == true
       update_config:
         order: start-first
         failure_action: rollback
@@ -109,7 +109,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.labels.dblabelnode == true
+          - node.labels.dbnode == true
       update_config:
         order: start-first
         failure_action: rollback
