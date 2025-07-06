@@ -16,7 +16,7 @@ services:
     healthcheck:
         test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
         interval: 10s
-        timeout: 10s
+        timeout: 5s
         retries: 3
     environment:
       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_password
