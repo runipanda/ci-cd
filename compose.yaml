@@ -34,7 +34,7 @@ services:
     secrets:
       - db_password
   blog-server:
-    image: runipanda/blog-app:build-c3539087dbe9fdcc6171a82928be7e4493fa7257
+    image: runipanda/blog-app:build-80c21703f71eba53dccae2ded2159a659231f12a
     deploy:
       replicas: 1
       update_config:
