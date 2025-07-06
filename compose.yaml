@@ -15,10 +15,9 @@ services:
         order: start-first
     healthcheck:
         test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-        interval: 20s
+        interval: 10s
         timeout: 10s
-        retries: 10
-        start_period: 40s
+        retries: 3
     environment:
       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_password
     volumes:
