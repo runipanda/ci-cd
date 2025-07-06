@@ -14,15 +14,11 @@ services:
         parallelism: 1
         order: start-first
     healthcheck:
-      test:
-        - CMD
-        - mysqladmin
-        - ping
-        - '-h'
-        - localhost
-      interval: 10s
-      timeout: 5s
-      retries: 3
+        test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+        interval: 20s
+        timeout: 10s
+        retries: 10
+        start_period: 40s
     environment:
       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_password
     volumes:
