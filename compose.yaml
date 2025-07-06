@@ -14,10 +14,15 @@ services:
         parallelism: 1
         order: start-first
     healthcheck:
-        test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-        interval: 10s
-        timeout: 5s
-        retries: 3
+      test:
+        - CMD
+        - mysqladmin
+        - ping
+        - '-h'
+        - localhost
+      interval: 10s
+      timeout: 5s
+      retries: 3
     environment:
       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_password
     volumes:
@@ -29,7 +34,7 @@ services:
     secrets:
       - db_password
   blog-server:
-    image: runipanda/blog-app:build-2364c2d0f8d2f675350341cd118ee1f09a42c40e
+    image: runipanda/blog-app:build-42a88c087cced29a238778bf7eb9436eccf55f8c
     deploy:
       replicas: 1
       update_config:
